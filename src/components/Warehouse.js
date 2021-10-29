@@ -10,15 +10,43 @@ const Warehouse = () => {
   const [editingText, setEditingText] = useState('') // tekst wijzigigen 
   const [editingCount, setEditingCount] = useState(''); // aantal wijzigen
 
+  function handleSubmit(e) {
+		e.preventDefault();
+
+		const newProduct = {
+			id: new Date().getTime(),
+			text: product,
+			count: count,
+		};
+		setProductList([...productList].concat(newProduct));
+		setProduct('');
+    setCount('');
+	}
+
   return (
 		<div className={styles.container}>
-			<form>
-				<label htmlFor='' className={styles.label}>
-					Product: <input />
+			<form onSubmit={handleSubmit}>
+				<label htmlFor='productName' className={styles.label}>
+					Nieuw product:
+					<input
+						className={styles.inputProduct}
+						type='text'
+						onChange={e => setProduct(e.target.value)}
+						value={product}
+					/>
 				</label>
-				<label htmlFor='' className={styles.label}>
-					Aantal: <input />
+				<label htmlFor='productCount' className={styles.label}>
+					Aantal:
+					<input
+						className={styles.inputCount}
+						type='text'
+						onChange={e => setCount(e.target.value)}
+						value={count}
+					/>
 				</label>
+				<button className={styles.confirmationNewInput} type='submit'>
+					Opname in de lijst
+				</button>
 			</form>
 		</div>
 	);
