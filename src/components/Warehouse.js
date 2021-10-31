@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import styles from './Warehouse.module.css';
 import { MdEdit, MdCheck, MdDelete} from 'react-icons/md';
 
@@ -6,26 +6,26 @@ const Warehouse = () => {
 
   const [productList, setProductList] = useState([]); // array als geheel
   const [product, setProduct] = useState(''); // productitem
-  const [count, setCount] = useState(''); // aantal productitems
-  const [productEditing, setProductEditing] = useState(null); //productitem wijzigen
-  const [editingText, setEditingText] = useState('') // tekst wijzigigen 
-  const [editingCount, setEditingCount] = useState(''); // aantal wijzigen
+  const [count, setCount] = useState(0); // aantal productitems
+	const [unit, setUnit] = useState(''); // eenheid
+  const [productEditing, setProductEditing] = useState(null); //productitem veranderen
+  const [editingText, setEditingText] = useState('') // tekst veranderen
+  const [editingCount, setEditingCount] = useState(''); // aantal veranderen
+	const [editingUnit, setEditingUnit] = useState(''); // eenheid veranderen
 
-	useEffect(() => {
-		console.log('count is veranderd')
-	}, [count])
-
-  function handleSubmit(e) {
+	function handleSubmit(e) {
 		e.preventDefault();
 
 		const newProduct = {
 			id: new Date().getTime(),
 			text: product,
 			count: count,
+			unit: unit
 		};
 		setProductList([...productList, newProduct]);
 		setProduct('');
     setCount('');
+		setUnit('');
 	}
 
   function deleteProduct(id) {
@@ -38,6 +38,7 @@ const Warehouse = () => {
 			if (item.id === id) {
 				item.text = editingText;
         item.count = editingCount;
+				item.unit = editingUnit;
 			}
 			return item;
 		});
@@ -48,16 +49,26 @@ const Warehouse = () => {
   
 	function decrement (id) {
 		const updatedProducts = [...productList].map(item => {
-			if (item.id === id) {setCount((prevcount) => parseInt(prevcount) - 1); console.log(+item.count)}
+			if (item.id === id) {item.count--}
 		return item
 	});
 	setProductList(updatedProducts);
-	setCount('')}
+	}
+
+	function increment(id) {
+		const updatedProducts = [...productList].map(item => {
+			if (item.id === id) {
+				item.count++;
+			}
+			return item;
+		});
+		setProductList(updatedProducts);
+	}
 		
 
   return (
 		<div className={styles.container}>
-			<form onSubmit={handleSubmit}>
+			<form className={styles.form} onSubmit={handleSubmit}>
 				<label htmlFor='productName' className={styles.label}>
 					Nieuw product:
 					<input
@@ -79,6 +90,22 @@ const Warehouse = () => {
 						value={count}
 						required='required'
 					/>
+					<select
+						className={styles.inputUnit}
+						type='text'
+						name='unit'
+						value={unit}
+						onChange={e => setUnit(e.target.value)}
+						required='required'
+					>
+						<option disabled value=''>
+							Kies eenheid
+						</option>
+						<option value='kg'>kg</option>
+						<option value='stuks'>stuks</option>
+						<option value='dozen'>dozen</option>
+						<option value='palletten'>palletten</option>
+					</select>
 				</label>
 				<button className={styles.confirmationNewInput} type='submit'>
 					Opname in de lijst
@@ -104,34 +131,45 @@ const Warehouse = () => {
 									placeholder='aantal'
 									required='required'
 								/>
+								<select
+									className={styles.itemInputUnit}
+									type='text'
+									name='unit'
+									onChange={e => setEditingUnit(e.target.value)}
+									required='required'
+								>
+									<option disabled value=''>
+										Kies eenheid
+									</option>
+									<option value='kg'>kg</option>
+									<option value='stuks'>stuks</option>
+									<option value='dozen'>dozen</option>
+									<option value='palletten'>palletten</option>
+								</select>
 							</form>
 						) : (
 							<div className={styles.itemDisplay}>
-								<div>{item.text}</div>
-								<div className={styles.countDisplay}>
-									<button
-										className={styles.countButton}
-										type='submit'
-										onClick={() => decrement(item.id)
-										}
-									>
-										-
-									</button>
-									{item.count}
-									<input
-										value={item.count}
-										type='number'
-										onChange={(e) => {setCount(e.target.value)}}
-									/>
-									<button
-										className={styles.countButton}
-										type='submit'
-										onClick={() =>
-											setCount(prevcount => parseInt(prevcount) + 1)
-										}
-									>
-										+
-									</button>
+								<div className={styles.textDisplay}>{item.text}</div>
+								<div>
+									<div className={styles.countDisplay}>
+										<button
+											className={styles.countButton}
+											type='submit'
+											onClick={() => decrement(item.id)}
+										>
+											-
+										</button>
+										<div className={styles.count}>{item.count}</div>
+
+										<button
+											className={styles.countButton}
+											type='submit'
+											onClick={() => increment(item.id)}
+										>
+											+
+										</button>
+										<div className={styles.unit}>{item.unit}</div>
+									</div>
 								</div>
 							</div>
 						)}
