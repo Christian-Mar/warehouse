@@ -13,6 +13,7 @@
 .label {
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   padding-right: 3rem;
+  font-size: 0.8rem;
 }
 
 .inputProduct {
@@ -47,4 +48,85 @@
   border-radius: 2rem;
   margin: 0.5rem;
   border: solid 1px black;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;  
+  align-items: center;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 0.4rem;
+  width: 80%;
+  height: 18px;
+}
+
+.itemButton {
+  background-color: black;
+  color: orange;
+  height: 1.4rem;
+  width: 100px;
+  border-radius: 2rem;
+  margin: 0.5rem;
+  border: solid 1px black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.actions {
+  display: flex;
+}
+
+.itemInputText {
+  background-color: white;
+  color: black;
+  height: 1.4rem;
+  width: 300px;
+  border-radius: 2rem;
+  margin: 0.5rem;
+  padding-left: 10px;
+  border: none;
+  font-family: monospace;
+}
+
+.itemInputCount {
+  background-color: white;
+  color: black;
+  height: 1.4rem;
+  width: 55px;
+  border-radius: 2rem;
+  margin: 0.5rem;
+  padding-left: 10px;
+  border: none;
+  font-family: monospace;
+}
+
+.itemTextInput {
+  display: flex;
+}
+
+.itemDisplay {
+  display: flex;
+  justify-content: space-between;
+  width: 400px;
+}
+
+.countButton {
+  background-color: black;
+  color: orange;
+  height: 1rem;
+  width: 1rem;
+  border-radius: 2rem;
+  margin: 0.5rem;
+  border: solid 1px black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.countDisplay {
+  display: flex;
+  align-items: center;
 }
